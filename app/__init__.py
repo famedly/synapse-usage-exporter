@@ -20,7 +20,7 @@ from logging.config import dictConfig
 import os
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
-from .metrics import Prometheus, INFOS
+from .metrics import Prometheus, INFOS, KEYS
 
 load_dotenv()  # take environment variables from .env.
 
@@ -66,11 +66,14 @@ prometheus = Prometheus(app)
 @app.route("/report-usage-stats/push", methods=["PUT"])
 def report_usage_stats():
     """Receive usage stats and write to prometheus metrics."""
-    labels = [request.json[key] or "None" for key in INFOS]
+    labels = [request.json[key] or "None" for key in KEYS]
+    infos = [request.json[key] or "None" for key in INFOS]
     if not app.config["LABELS_INITIALIZED"]:
         app.logger.debug("Initialize labels %s", labels)
+        prometheus.metrics["info"].labels(*infos)
+    prometheus.metrics["info"].labels(*infos).set(1)
     for key, value in request.json.items():
-        if key in INFOS:
+        if key in INFOS or key in KEYS:
             continue
         if not app.config["LABELS_INITIALIZED"]:
             prometheus.metrics[key].labels(*labels)

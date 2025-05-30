@@ -35,8 +35,11 @@ GAUGES = [
     "event_cache_size",
 ]
 
-INFOS = [
+KEYS = [
     "homeserver",
+]
+
+INFOS = KEYS + [
     "server_context",
     "python_version",
     "database_engine",
@@ -71,6 +74,9 @@ class Prometheus:
             {"version": app.config["VERSION"], "build": app.config["BUILD"]}
         )
         self.metrics = {
-            metric: Gauge(app.config["METRICS_PREFIX"] + metric, metric, INFOS)
+            metric: Gauge(app.config["METRICS_PREFIX"] + metric, metric, KEYS)
             for metric in GAUGES
         }
+        self.metrics["info"] = Gauge(
+            app.config["METRICS_PREFIX"] + "info", "info", INFOS
+        )
