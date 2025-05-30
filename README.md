@@ -39,8 +39,8 @@ docker-compose -f docker/docker-compose.yml up --build
 2. Enable reporting and set the reporting endpoint in Synapse.
 
 ```
-report_stats: true
-report_stats_endpoint: <container-ip>:5000/report-usage-stats/push
+config.reportStats: true
+extraConfig.report_stats_endpoint: <container-ip>:5000/report-usage-stats/push
 ```
 
 3. Restart Synapse for the changes to take effect and wait at least 5 minutes until the first report is pushed.
