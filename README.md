@@ -55,6 +55,17 @@ extraConfig.report_stats_endpoint: <container-ip>:5000/report-usage-stats/push
 
 ## License
 
-See [LICENSE.md](LICENSE.md)
+See [LICENSE.md](LICENSE.md).
+
+__Note:__ This repository is a fork of [loelkes/synapse-usage-exporter](https://github.com/loelkes/synapse-usage-exporter) based on their license ([GNU AGPL](https://github.com/loelkes/synapse-usage-exporter/blob/main/LICENSE.md)).
+
+## Releases
+
+* Change the version in `app/__version__.py`
+* Run `pip3 install black ruff` then `python3 -m black --check .` and `python3 -m ruff check .` to validate formatting and linting
+* Run `git-cliff --bump`
+* Add relevant parts of the git-cliff output to `CHANGELOG.md`
+* Create release commit and submit PR: `git commit -m "release: v0.x.x"`
+* After PR merge: `git tag -a -s v0.x.x -m "v0.x.x"`
 
 

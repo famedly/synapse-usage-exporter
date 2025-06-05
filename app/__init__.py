@@ -20,6 +20,7 @@ from logging.config import dictConfig
 import os
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
+from .__version__ import __version__
 from .metrics import Prometheus, INFOS, KEYS
 
 load_dotenv()  # take environment variables from .env.
@@ -58,7 +59,7 @@ logger.warning("Werkzeug logger set to %s", logging.getLevelName(werkzeug_logger
 
 app = Flask(__name__)
 app.logger.setLevel(logging.getLogger().level)
-app.config["VERSION"] = os.environ.get("APP_VERSION", "undefined")
+app.config["VERSION"] = os.environ.get("APP_VERSION", __version__)
 app.config["BUILD"] = os.environ.get("BUILD_ID", "undefined")
 prometheus = Prometheus(app)
 
