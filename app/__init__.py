@@ -82,3 +82,41 @@ def report_usage_stats():
         app.logger.debug("Receive value %s for %s", value, key)
     app.config["LABELS_INITIALIZED"] = True
     return jsonify({})
+
+
+@app.route("/healthz", methods=["GET"])
+def healthz():
+    """Health check endpoint for Kubernetes."""
+    return (
+        jsonify(
+            {
+                "status": "healthy",
+                "version": app.config["VERSION"],
+                "build": app.config["BUILD"],
+            }
+        ),
+        200,
+    )
+
+
+@app.route("/livez", methods=["GET"])
+def livez():
+    """Liveness probe endpoint for Kubernetes."""
+    return jsonify({"status": "alive", "version": app.config["VERSION"]}), 200
+
+
+@app.route("/readyz", methods=["GET"])
+def readyz():
+    """Readiness probe endpoint for Kubernetes."""
+    # Since this Flask app has no external dependencies,
+    # we just need to check if the app is running
+    return (
+        jsonify(
+            {
+                "status": "ready",
+                "version": app.config["VERSION"],
+                "build": app.config["BUILD"],
+            }
+        ),
+        200,
+    )
