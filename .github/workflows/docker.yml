@@ -12,8 +12,8 @@ jobs:
     uses: famedly/github-workflows/.github/workflows/docker.yml@main
     with:
       push: ${{ github.event_name != 'pull_request' }} # Always build, don't publish on pull requests
-      registry_user: famedly-ci
-      registry: docker-oss.nexus.famedly.de
+      registry_user: ${{ vars.HARBOR_REGISTRY_USER }}
+      registry: registry.famedly.net/docker-oss
       image_name: synapse-usage-exporter
       file: docker/Dockerfile
     secrets: inherit
