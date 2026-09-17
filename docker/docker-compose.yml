@@ -13,7 +13,9 @@ services:
     ports:
       - 5000:5000
     tmpfs:
-      - /tmp/prometheus
+      # The container runs as an unprivileged user, so the tmpfs must be writable
+      # by it; without a mode the kernel mounts it root-owned 0755.
+      - /tmp/prometheus:mode=1777
     environment:
       - APP_LOG_LEVEL=DEBUG
       - PROMETHEUS_MULTIPROC_DIR=/tmp/prometheus
