@@ -16,12 +16,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import logging
-from logging.config import dictConfig
 import os
+from logging.config import dictConfig
+
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify, request
+
 from .__version__ import __version__
-from .metrics import Prometheus, INFOS, KEYS
+from .metrics import INFOS, KEYS, Prometheus
 
 load_dotenv()  # take environment variables from .env.
 

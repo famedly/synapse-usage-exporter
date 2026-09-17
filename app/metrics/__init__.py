@@ -1,11 +1,16 @@
 """Prometheus metrics module."""
 
 import sys
-from flask import Flask
-from werkzeug.middleware.dispatcher import DispatcherMiddleware
-from prometheus_client import multiprocess, make_wsgi_app, Info, Gauge
-from prometheus_client import CollectorRegistry
 
+from flask import Flask
+from prometheus_client import (
+    CollectorRegistry,
+    Gauge,
+    Info,
+    make_wsgi_app,
+    multiprocess,
+)
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
 GAUGES = [
     "memory_rss",
